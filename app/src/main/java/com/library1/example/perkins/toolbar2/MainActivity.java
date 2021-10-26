@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
         //populate spinner
         setupSimpleSpinner();
-
         setupCheckBox();
         setupEditText();
     }
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         //create a data adapter to fill above spinner with choices
         //R.array.numbers is arraylist in strings.xml
         //R.layout.spinner_item_simple is just a textview
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.numbers,R.layout.spinner_item_simple);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this,R.array.numbers,R.layout.spinner_item_simple);
 
         //get a reference to the spinner
         spinner = (Spinner)findViewById(R.id.spinner);
@@ -77,13 +76,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int pos, long rowid) {
                 if (arg0.getChildAt(SELECTED_ITEM) != null) {
-                    ((TextView) arg0.getChildAt(SELECTED_ITEM)).setTextColor(Color.WHITE);
+                    ((TextView) arg0.getChildAt(SELECTED_ITEM)).setTextColor(Color.RED);
                     Toast.makeText(MainActivity.this, (String) arg0.getItemAtPosition(pos), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
+                Toast.makeText(MainActivity.this, "No changes", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
              * This method will be invoked when a button in the dialog is clicked.
              * Note the @override
              * Note also that I have to scope the context in the toast below, thats because anonymous classes have a
-             * reference to the class they were declared in accessed via Outerclassname.this
+             * reference to the class they were declared in. It's accessed via Outerclassname.this
              *
              * @param dialog The dialog that received the click.
              * @param which  The button that was clicked (e.g.
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MainActivity.this, "clicked OK in Help", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this.getApplicationContext(), "clicked OK in Help", Toast.LENGTH_SHORT).show();
             }
         });
         AlertDialog dialog = builder.create();
